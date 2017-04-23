@@ -1,0 +1,74 @@
+package Kmeans;
+
+import java.awt.Point;
+import java.util.ArrayList;
+
+public class ClusterHandler {
+
+	private int k; // number of clusters
+	private ArrayList<Point> allpoints;
+	private ArrayList<Cluster> clusters;
+	
+	public ClusterHandler(int k, ArrayList<Point> allpoints) {
+		this.k = k;
+		this.allpoints = allpoints;
+		for(int i=0; i<k; i++) {
+			// create k number of clusters
+			clusters.add(new Cluster());
+		}
+	}
+	
+	public boolean clusterify(int maxIterations) {
+		// apply kmeans algo now
+		if( !initialize() ) {
+			return false; 
+		}
+		for(int i=0; i<maxIterations; i++) {
+			
+			for(int p=0; p<allpoints.size(); p++) {
+				
+				Point currentPoint = allpoints.get(p);
+				// find the point distance to cluster centriod 
+				double minDistance = 99999;
+				int minCIndex = -1;
+				for(int clusterID=0; clusterID<k; clusterID++) {
+					Point currentCentriod = clusters.get(clusterID).getCentriod();
+					/*if( currentPoint.equals(currentCentriod) ) {
+						// need not calculate 
+						continue;
+					}*/
+					double d = currentCentriod.distance(currentPoint);
+					if( d < minDistance ) {
+						minDistance = d;
+						minCIndex = clusterID;
+					}
+				}
+				
+				if( minCIndex > 0 ) {
+					// assign the point to the lowest distance cluster
+					clusters.get(minCIndex).addNewPoint(currentPoint);
+				}
+			}
+			
+		}
+		return true;
+	}
+	
+	private boolean initialize() {
+		
+		if(k > allpoints.size()) {
+			return false;
+		}
+		// init algo with centriods of clusters with first k points in allpoints 
+		for(int i=0; i<k; i++) {
+			clusters.get(i).updateCentriod(allpoints.get(i));
+		}
+		return true;
+	}
+
+	public ArrayList<Cluster> getClusters() {
+		// prettified cluster strings
+		return clusters;
+	}
+	
+}

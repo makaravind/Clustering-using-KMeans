@@ -1,0 +1,15 @@
+package Kmeans;
+
+import java.awt.Point;
+import java.util.ArrayList;
+
+public class Cluster {
+
+	private Point centriod;
+	private ArrayList<Point> memberPoints;
+	
+	public Cluster() {
+		memberPoints = new ArrayList<>();
+	}
+	
+}

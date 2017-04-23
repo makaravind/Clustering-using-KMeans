@@ -1,0 +1,64 @@
+package Kmeans;
+
+import java.awt.Point;
+import java.util.ArrayList;
+
+public class Cluster {
+
+	private Point centriod;
+	private ArrayList<Point> memberPoints;
+	
+	public Cluster() {
+		this.centriod = new Point(); 
+		memberPoints = new ArrayList<>();
+	}
+
+	public ArrayList<Point> getMemberPoints() {
+		return memberPoints;
+	}
+
+	public void setMemberPoints(ArrayList<Point> memberPoints) {
+		this.memberPoints = memberPoints;
+	}
+
+	public void updateCentriod(Point p) {
+		this.centriod = p;
+	}
+	
+	public Point getCentriod() {
+		return this.centriod;
+	}
+	
+	public void addNewPoint(Point p) {
+		this.memberPoints.add(p);
+	}
+	
+	/*finds the means and updates the centriod of the cluster*/
+	public void remapCentriod() {
+		int n = memberPoints.size();
+		int meanX = calculateXSum() / n;
+		int meanY  = calculateYSum() / n ;
+		this.centriod = new Point(meanX, meanY);
+	}
+	
+	private int calculateXSum() {
+		int sum = 0;
+		for(int i=0; i<memberPoints.size(); i++) {
+			sum += memberPoints.get(i).x;
+		}
+		return sum;
+	}
+	
+	private int calculateYSum() {
+		int sum = 0;
+		for(int i=0; i<memberPoints.size(); i++) {
+			sum += memberPoints.get(i).y;
+		}
+		return sum;
+	}
+	
+	public void clearMemberPoints() {
+		this.memberPoints.clear();
+	}
+	
+}

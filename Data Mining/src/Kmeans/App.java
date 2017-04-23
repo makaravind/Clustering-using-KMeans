@@ -1,0 +1,28 @@
+package Kmeans;
+
+import java.awt.Point;
+import java.util.ArrayList;
+
+public class App {
+
+	public static void main(String[] args) {
+		
+		ArrayList<Point> points = new ArrayList<>();
+		points.add(new Point(1, 1));
+		points.add(new Point(1, 3));
+		points.add(new Point(2, 2));
+		points.add(new Point(2, 5));
+		points.add(new Point(6, 3));
+		points.add(new Point(6, 8));
+		points.add(new Point(7, 9));
+		
+		ClusterHandler handler = new ClusterHandler(2, points);
+		
+		// uses KMeans algorithm to clusterify
+		handler.clusterify(100);
+		
+		// prints clusters on console
+		handler.prettyPrintClusters();
+	}
+
+}
